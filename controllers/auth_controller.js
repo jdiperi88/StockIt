@@ -9,6 +9,11 @@ function tokenForUser(user){
     return jwt.encode({ sub: user.id, iat: timestamp }, config.secret)
 }
 
+authController.signin = (req, res, next) =>{
+    //checking credentials in exchange for token
+    res.send({ token: tokenForUser(req.user) })
+}
+
 authController.signup = function(req,res,next) {
     console.log(req.body);
     const email = req.body.email;
@@ -17,7 +22,7 @@ authController.signup = function(req,res,next) {
     const lastname = req.body.lastname ;
     const  username = req.body.username;
 
-    if( !email || !password || !firstname || !lastname || !username ) {
+    if( !email || !password ) {
         return res.status(422).send({error: 'you must provide all fields'})
     }
 

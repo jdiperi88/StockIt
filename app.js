@@ -30,4 +30,4 @@ app.listen(port);
 console.log(`Sever listening on ${port}`)
 
 const authRoutes = require('./routes/auth_routes');
-app.use('/signup',authRoutes);
+app.use('/auth',authRoutes);
