@@ -12,7 +12,7 @@ class Signin extends Component {
         if(this.props.errorMessage){
             return ( 
                 <div className="alert alert-danger">
-                    <strong> Oops!</strong>
+                    <strong> Oops!</strong> {this.props.errorMessage}
                 </div>
             )
         }
@@ -27,8 +27,9 @@ class Signin extends Component {
              </fieldset>
              <fieldset className="form-group">
                 <label> password: </label>
-                <input {...password} className="form-control" />
+                <input {...password} type="password" className="form-control" />
              </fieldset>
+             {this.renderAlert()}
              <button action="submit" className="btn btn-primary"> Sign In </button>
         </form>
         );
@@ -36,11 +37,11 @@ class Signin extends Component {
 }
 
 function mapStateToProps(state) {
-    return {errorMessage: state.auth.error};
+    return { errorMessage: state.auth.error };
 }
 
 //first set of parenthesis is for configuration and second for the component
 export default reduxForm({
     form: 'signin',
     fields: ['email', 'password']
-}, mapStateToProps, actions )(Signin)
+}, mapStateToProps, actions)(Signin);
