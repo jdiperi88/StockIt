@@ -10,7 +10,7 @@ const requireAuth = passport.authenticate('jwt', {session: false})
 const requireSignin = passport.authenticate('local', {session: false})
 
 authRoutes.get('/',requireAuth,(req, res)=>{
-    res.send({hi: 'there'})
+    res.send({message: 'Super secret code 123'})
 })
     authRoutes.post('/signup',authController.signup)
     authRoutes.post('/signin',requireSignin,authController.signin)

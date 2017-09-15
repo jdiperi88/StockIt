@@ -4,11 +4,12 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
 const mongoose = require('mongoose');
-
+const cors = require('cors');
 
 
 //middleware
 app.use(morgan('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
