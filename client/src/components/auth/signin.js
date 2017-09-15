@@ -7,6 +7,16 @@ class Signin extends Component {
         //need to do something to log in user
         this.props.signinUser({email, password});
     }
+
+    renderAlert() {
+        if(this.props.errorMessage){
+            return ( 
+                <div className="alert alert-danger">
+                    <strong> Oops!</strong>
+                </div>
+            )
+        }
+    }
     render(){
         const { handleSubmit, fields: { email, password }} = this.props;
         return (
@@ -25,8 +35,12 @@ class Signin extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {errorMessage: state.auth.error};
+}
+
 //first set of parenthesis is for configuration and second for the component
 export default reduxForm({
     form: 'signin',
     fields: ['email', 'password']
-}, null, actions )(Signin)
+}, mapStateToProps, actions )(Signin)
