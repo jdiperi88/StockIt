@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+
 class Header extends Component {
     
     renderLinks(){
@@ -15,7 +16,7 @@ class Header extends Component {
                 <Link className="nav-link" to="/signin" key={1}>Sign In </Link>
             </li>, 
             <li className="nav-item">
-                <Link className="nav-link" to="/sign" key={2} >Sign up </Link>
+                <Link className="nav-link" to="/signup" key={2} >Sign up </Link>
           </li>
         ];
     }
@@ -32,11 +33,11 @@ class Header extends Component {
     }
 }
 
-function mapStateTo(state) {
+function mapStateToProps(state) {
     return {
         authenticated: state.auth.authenticated
     }
 }
 
 
-export default Header;
+export default connect(mapStateToProps)(Header);
