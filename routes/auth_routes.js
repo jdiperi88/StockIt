@@ -6,12 +6,13 @@ const passport = require('passport');
 
 //gets jwt strategy
 const requireAuth = passport.authenticate('jwt', {session: false})
+console.log(requireAuth);
 //gets local strategy helper method
 const requireSignin = passport.authenticate('local', {session: false})
 
-authRoutes.get('/',requireAuth,(req, res)=>{
-    res.send({message: 'Super secret code 123'})
-})
+// authRoutes.get('/',requireAuth,(req, res)=>{
+//     res.send({message: 'Super secret code 123'})
+// })
     authRoutes.post('/signup',authController.signup)
     authRoutes.post('/signin',requireSignin,authController.signin)
 

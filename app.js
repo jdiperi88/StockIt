@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+const requireAuth = require('./routes/auth_routes')
 
 //middleware
 app.use(morgan('dev'));
@@ -30,5 +30,12 @@ const server = http.createServer(app);
 app.listen(port);
 console.log(`Sever listening on ${port}`)
 
+app.get('/',requireAuth,(req, res)=>{
+  console.log(res)
+  res.send({message: 'Super secret code 123'})
+})
+
 const authRoutes = require('./routes/auth_routes');
 app.use('/auth',authRoutes);
+
+
