@@ -22,10 +22,10 @@ export function signinUser({ email, password }){
             // -redirect to the route /feature
             browserHistory.push('/feature')
         })
-        .catch(()=>{
+        .catch((res)=>{
     //if request is bad
     //-show error to the user
-            dispatch(authError('Bad login info'));
+            dispatch(authError(res.data.error));
         });
     }
 }
@@ -41,4 +41,27 @@ export function signoutUser(){
     localStorage.removeItem('token');
     return { type: UNAUTH_USER}
 
+}
+
+export function signupUser({ email, password,firstname,lastname,username }){
+    return function(dispatch){
+    
+    
+    //submit fields to the server
+    axios.post(`${ROOT_URL}/auth/signup`,{email,password,firstname,lastname,username})
+        .then(res => {
+            //if request is good update state
+            //- update state to indivate user is authenticaed 
+            dispatch({type: AUTH_USER});
+            //-save the jwt token
+            localStorage.setItem('token',res.data.token);
+            // -redirect to the route /feature
+            browserHistory.push('/feature')
+        })
+        .catch((res)=>{
+    //if request is bad
+    //-show error to the user
+            dispatch(authError(res.data.error));
+        });
+    }
 }
