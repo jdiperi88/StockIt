@@ -5,7 +5,8 @@ import {browserHistory } from 'react-router';
 import { AUTH_USER,
         UNAUTH_USER,
         AUTH_ERROR,
-        FETCH_MESSAGE
+        FETCH_MESSAGE,
+        GET_STOCK
      } from './types'
 
 
@@ -61,6 +62,8 @@ export function signupUser({ email, password,firstname,lastname,username }){
             //-save the jwt token
             localStorage.setItem('token',res.data.token);
             // -redirect to the route /feature
+            firstname,
+            lastname
             browserHistory.push('/feature')
         })
         .catch((res)=>{
@@ -82,6 +85,25 @@ export function fetchMessage(){
                 dispatch({
                     type: FETCH_MESSAGE,
                     payload: res.data.message
+                })
+            }).catch(res => {
+                dispatch(authError(res.error))
+            });
+
+    }
+}
+
+export function getStock({ticker_symbol}){
+    console.log(ticker_symbol)
+    return function(dispatch) {
+        axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker_symbol}&interval=1min&apikey=5QP2C2R2YCZ71HDB&datatype=json`, {
+            headers: { authorization: localStorage.getItem('token')}
+        })
+            .then(res => {
+                console.log(res.data["Time Series (1min)"])
+                dispatch({
+                    type: GET_STOCK,
+                    payload: res.data
                 })
             }).catch(res => {
                 dispatch(authError(res.error))

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
+const StockSchema = require('./stock_schema')
 // Define our model
 const userSchema = new Schema({
     firstname: String,
@@ -9,6 +10,8 @@ const userSchema = new Schema({
     username: { type: String, unqiue: true, lowercase: true },
     email: { type: String, unqiue: true, lowercase: true },
     password: String,
+    stockCount: Number,
+    stocks: [StockSchema]
 });
 
 // on save hook, encrypt password

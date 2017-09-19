@@ -1,20 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 import * as actions from '../actions';
 
 class Feature extends Component{
     componentWillMount(){
         this.props.fetchMessage();
     }
-    render() {
-        return ( 
-            <div> {this.props.message}</div>
-        )
+    handleFormSubmit({ ticker_symbol }){
+        console.log( ticker_symbol );
+        this.props.getStock({ticker_symbol});
+    }
+    render(){
+        const { handleSubmit, fields: { ticker_symbol }} = this.props;
+        return (
+    <div>
+        <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this))}>
+            <fieldset className="form-group">
+                <label> Ticker Symbol: </label>
+                <input {...ticker_symbol} className="form-control" />
+             </fieldset>
+             <button action="submit" className="btn btn-primary"> Get Quote </button>
+        </form>
+        <h1></h1>
+    </div>
+        );
     }
 }
 
 function mapStateToProps(state){
-    return { message: state.auth.message};
+    console.log(state);
+    return { message: state.stock.message, 
+    stock: state.stock.stock};
 }
 
-export default connect( mapStateToProps, actions)(Feature);
+export default reduxForm({
+    form: 'getstock',
+    fields: ['ticker_symbol']
+}, mapStateToProps, actions)(Feature);

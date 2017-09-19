@@ -11,7 +11,10 @@ function tokenForUser(user){
 
 authController.signin = (req, res, next) =>{
     //checking credentials in exchange for token
-    res.send({ token: tokenForUser(req.user) })
+    console.log(res)
+    res.send({ token: tokenForUser(req.user),
+                username: req.user.username
+     })
 }
 
 authController.signup = function(req,res,next) {
@@ -48,7 +51,12 @@ authController.signup = function(req,res,next) {
             if (err) {
                 return next(err);
             }
-            res.json({ token:tokenForUser(user) })
+            res.json({ 
+                firstname,
+                lastname,
+                username,
+                email,
+                token:tokenForUser(user) })
         });
     })
 

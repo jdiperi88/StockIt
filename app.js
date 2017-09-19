@@ -31,7 +31,6 @@ app.listen(port);
 console.log(`Sever listening on ${port}`)
 
 app.get('/',requireAuth,(req, res)=>{
-  console.log(res)
   res.send({message: 'Super secret code 123'})
 })
 
