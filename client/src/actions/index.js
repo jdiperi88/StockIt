@@ -94,9 +94,10 @@ export function fetchMessage(){
 }
 
 export function getStock({ticker_symbol}){
+    
     console.log(ticker_symbol)
     return function(dispatch) {
-        axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker_symbol}&interval=1min&apikey=5QP2C2R2YCZ71HDB&datatype=json`, {
+        axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&outputsize=compact&symbol=${ticker_symbol}&interval=1min&apikey=5QP2C2R2YCZ71HDB&datatype=json`, {
             headers: { authorization: localStorage.getItem('token')}
         })
             .then(res => {
